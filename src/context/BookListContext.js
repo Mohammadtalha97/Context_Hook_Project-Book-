@@ -10,10 +10,9 @@ const BookListContextProvider = (props) => {
   });
 
   useEffect(() => {
-    //whenever book add or delete this gona reflect in localstorage
+    //whenever book add or delete this gona reflect
     localStorage.setItem("books", JSON.stringify(books));
   }, [books]);
-
   return (
     <BookListContext.Provider value={{ books, dispatch }}>
       {props.children}

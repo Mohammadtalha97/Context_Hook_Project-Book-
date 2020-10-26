@@ -1,0 +1,63 @@
+--> insted of using useState we can use useReducer in which there are 3 argument need to be passed
+--> (1) reducer name (2)intial state[which is mendatory] (3) init(to create initila state lazyly we can pass third arg as a function )
+--> create reducer in reducers/bookReducers.js
+--> it will return state and dispatch so to catch them
+
+import React, { useReducer } from "react";
+import { bookReducers } from "../reducers/bookReducers";
+
+
+const [books, dispatch] = useReducer(bookReducers, [], ()=>{})
+
+
+--> now it's time to create context
+
+import React, { createContext } from "react";
+
+export const BookListContext = createContext();
+
+return (
+    <BookListContext.Provider value={{ books, dispatch }}>
+      {props.children}
+    </BookListContext.Provider>
+  );
+
+
+
+
+--> App.js
+ <BookListContextProvider>
+    <Navbar />
+    <BookList />
+    <BookForm />
+</BookListContextProvider>
+
+
+--> all the child of  <BookListContextProvider> in App.js are gona stay at { props.childern } in BookListContext.js
+
+
+--> Now all child are able to access context
+
+
+--> BookForm.js
+
+import React, { useContext } from "react";
+
+const { dispatch } = useContext(BookListContext);
+
+
+const handleSubmit = (e) => {
+    dispatch({
+      type: "ADD_BOOK",
+      book: {
+        title,
+        author,
+      },
+    });
+}
+
+
+
+
+
+
